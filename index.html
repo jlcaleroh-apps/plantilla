@@ -36,9 +36,6 @@ button:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
 .brand{font-size:clamp(24px,4vw,34px);font-weight:800}
 .top-right{display:flex;gap:8px;align-items:center}
 .round{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:22px;border:2px solid var(--bg-3);color:var(--muted);position:relative}
-/* gesto estándar del panel del adulto: mantener presionado 2 s (el anillo se llena) */
-.round.hold::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:4px solid var(--accent);clip-path:inset(0 100% 0 0)}
-.round.hold.holding::after{clip-path:inset(0 0 0 0);transition:clip-path 2s linear}
 .kid{font-weight:700;background:var(--bg-2);padding:6px 14px;border-radius:999px}
 .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
 .big{font-size:clamp(30px,5vw,46px);font-weight:800;margin:0;line-height:1.1;text-wrap:balance}
@@ -111,6 +108,7 @@ button:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
 
 <script src="respaldo.js"></script>
 <script src="voz.js"></script>
+<script src="adulto.js"></script>
 <script>
 (() => {
 'use strict';
@@ -272,15 +270,8 @@ $('#infoBtn').onclick = () => {
     <div class="row"><button class="btn" id="shClose">${T().close}</button></div>`);
   $('#shClose').onclick = closeSheet;
 };
-/* gesto estándar: mantener presionado 2 s (los niños no lo abren por accidente) */
-(function hold() {
-  const b = $('#adultBtn'); let tm = 0;
-  const go = e => { e.preventDefault(); b.classList.add('holding'); tm = setTimeout(() => { b.classList.remove('holding'); openAdult(); }, 2000); };
-  const stop = () => { clearTimeout(tm); b.classList.remove('holding'); };
-  b.addEventListener('pointerdown', go); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, stop));
-  b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAdult(); } });
-  b.addEventListener('contextmenu', e => e.preventDefault());
-})();
+/* gesto estándar (componente común adulto.js): mantener presionado 2 s */
+Adulto.mantener($('#adultBtn'), openAdult, { idioma: () => S.lang });
 function openAdult() {
   const t = T();
   sheet(`<h2>${t.adult}</h2><p>${esc(kid().name)} · ${t.stats(kid().sessions, todayCount())}</p>

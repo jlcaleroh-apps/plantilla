@@ -31,7 +31,7 @@ Basados en el documento de investigación "Juegos en iPad para que niños con TD
   4. Para el adulto
   5. Sin Internet (instalar)
   6. Contacto: jlcaleroh@gmail.com
-- [ ] **Panel del adulto** con el **gesto estándar: mantener presionado ⚙ 2 segundos** (anillo que se llena). PIN solo como opción extra.
+- [ ] **Panel del adulto** con el **gesto estándar: mantener presionado 2 segundos** (el botón se llena de color; si se suelta antes, aviso corto). Se hace con el componente `adulto.js`. PIN solo como opción extra, pedido después del gesto.
 - [ ] El panel incluye: progreso, jugadores (agregar, cambiar nombre, borrar con confirmación), idioma, límite diario opcional, **Prueba de voz**, **Respaldo** y contacto.
 
 ## 3. Perfiles, racha y progreso
@@ -52,6 +52,7 @@ Copiar **sin cambios**. Si se mejora uno, se copia igual a todos los repos.
 |---|---|---|
 | `respaldo.js` | Guardar y restaurar el progreso de todos los niños en un archivo; fecha del último respaldo y aviso a las 2 semanas; pide al navegador no borrar los datos. | Panel del adulto |
 | `voz.js` | Elegir la voz por idioma, velocidad y ejemplos para comprobar la pronunciación. | Panel del adulto |
+| `adulto.js` | Gesto común para abrir lo que es solo para adultos: mantener presionado 2 s, con llenado y aviso. | Botón del panel del adulto (y ajustes) |
 
 El habla de la app usa siempre la voz elegida: `Voz.elegida(lang)` y `Voz.velocidad(lang)`.
 
