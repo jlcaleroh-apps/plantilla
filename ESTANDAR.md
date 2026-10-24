@@ -44,14 +44,14 @@ Basados en el documento de investigación "Juegos en iPad para que niños con TD
 - Todas las apps viven en `jlcaleroh-apps.github.io` y **comparten localStorage**.
 - [ ] **Todas las claves empiezan con el id de la app y dos puntos:** `silabas:…`, `numeros:…`. Nunca claves genéricas como `perfiles`.
 - [ ] El respaldo declara exactamente esas claves (`clave: k => k.startsWith(APP + ':')`).
-- Pendiente conocido: Números usa claves sin prefijo (`perfiles`, `nivel_…`); migrarlas con cuidado algún día.
+- Si una app tenía claves sin prefijo, se migran una sola vez al abrir (copiar a `app:…`, borrar la vieja, sin pisar datos nuevos) y el respaldo usa `renombrar` para leer respaldos viejos. Ejemplo: Números.
 
 ## 5. Componentes comunes (mismo archivo en todas las apps)
 Copiar **sin cambios**. Si se mejora uno, se copia igual a todos los repos.
 
 | Archivo | Qué hace | Dónde se monta |
 |---|---|---|
-| `respaldo.js` | Guardar y restaurar el progreso de todos los niños en un archivo; fecha del último respaldo y aviso a las 2 semanas; pide al navegador no borrar los datos. | Panel del adulto |
+| `respaldo.js` | Guardar y restaurar el progreso de todos los niños en un archivo; fecha del último respaldo y aviso a las 2 semanas; pide al navegador no borrar los datos. Lee respaldos viejos con `convertir` o `renombrar`. | Panel del adulto |
 | `voz.js` | Elegir la voz por idioma, velocidad y ejemplos para comprobar la pronunciación. | Panel del adulto |
 | `adulto.js` | Gesto común para abrir lo que es solo para adultos: mantener presionado 2 s, con llenado y aviso. | Botón del panel del adulto (y ajustes) |
 
