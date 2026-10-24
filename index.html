@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<!-- ① CAMBIA: título, nombre corto y color -->
+<title>Plantilla</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Plantilla">
+<meta name="theme-color" content="#1f2a5a">
+<style>
+/* ② CAMBIA: la identidad visual vive en estos tokens. Todo lo demás se deriva de aquí. */
+:root{
+  --bg:#1f2a5a; --bg-2:#2b3872; --bg-3:#3a4a8f; --ink:#fff8ec; --muted:#c3c9ec;
+  --accent:#ffd447; --accent-dark:#c79b1b; --ok:#7be08a; --card:#fffaf0; --card-ink:#1d1b3a;
+  --f-ui: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: dark;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);overflow:hidden;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
+#app{position:relative;height:100%;max-width:1100px;margin:0 auto}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;gap:14px;padding-block:12px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-size:clamp(24px,4vw,34px);font-weight:800}
+.top-right{display:flex;gap:8px;align-items:center}
+.round{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:22px;border:2px solid var(--bg-3);color:var(--muted);position:relative}
+/* gesto estándar del panel del adulto: mantener presionado 2 s (el anillo se llena) */
+.round.hold::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:4px solid var(--accent);clip-path:inset(0 100% 0 0)}
+.round.hold.holding::after{clip-path:inset(0 0 0 0);transition:clip-path 2s linear}
+.kid{font-weight:700;background:var(--bg-2);padding:6px 14px;border-radius:999px}
+.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
+.big{font-size:clamp(30px,5vw,46px);font-weight:800;margin:0;line-height:1.1;text-wrap:balance}
+.sub{font-size:20px;color:var(--muted);margin:0}
+.play{font-weight:800;font-size:clamp(26px,4vw,36px);padding:14px 40px;border-radius:999px;background:var(--accent);color:var(--bg);box-shadow:0 7px 0 var(--accent-dark)}
+.play:active{transform:translateY(5px);box-shadow:0 2px 0 var(--accent-dark)}
+.link{color:var(--muted);text-decoration:underline;font-size:17px;padding:8px}
+.streak{display:flex;align-items:center;gap:10px;background:var(--bg-2);border-radius:18px;padding:6px 14px}
+.streak b{font-size:32px;color:var(--accent)}
+.dots{display:flex;gap:4px}.dots i{width:12px;height:12px;border-radius:50%;background:var(--bg-3)}.dots i.on{background:var(--accent)}
+.energy{display:flex;justify-content:center;gap:8px}
+.energy i{width:34px;height:34px;border-radius:50%;background:var(--bg-3)}
+.energy i.on{background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;gap:clamp(12px,4vw,40px);flex-wrap:wrap}
+.target{width:clamp(96px,18vw,150px);aspect-ratio:1;border-radius:28px;background:var(--bg-2);font-size:clamp(56px,10vw,90px);display:grid;place-items:center;transition:transform .15s}
+.target:active{transform:scale(.93)}
+.target.glow{background:var(--bg-3);box-shadow:0 0 0 6px var(--accent),0 0 40px var(--accent)}
+.target.shake{animation:shake .4s}
+.bubble{background:var(--card);color:var(--card-ink);border-radius:24px;padding:12px 20px;font-size:24px;font-weight:700;align-self:center}
+.who-grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.who{width:160px;background:var(--bg-2);border:3px solid var(--bg-3);border-radius:26px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:800;font-size:22px}
+.who .av{font-size:56px}
+/* hojas (panel del adulto, info, formularios) */
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(10,10,30,.6);display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:var(--card);color:var(--card-ink);border-radius:22px;padding:20px;width:min(580px,100%);max-height:100%;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.card h2{margin:0;font-size:26px}.card h3{margin:6px 0 0;font-size:18px}
+.card p{margin:0;line-height:1.4}.card ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;line-height:1.4}
+.btn{font-weight:600;padding:10px 16px;border-radius:12px;background:var(--bg-2);color:var(--ink)}
+.btn.light{background:#ece5d3;color:var(--card-ink)}.btn.danger{background:#b9334f;color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.note{font-size:13px;opacity:.75}
+.card input[type=text],.card select{font:inherit;font-size:17px;padding:8px 10px;border-radius:10px;border:2px solid #cfc6b0;background:#fff;color:var(--card-ink)}
+@keyframes shake{0%,100%{translate:0}25%{translate:-10px}50%{translate:10px}75%{translate:-6px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- ¿QUIÉN JUEGA? -->
+  <section id="who" class="screen" hidden></section>
+
+  <!-- INICIO: una sola meta -->
+  <section id="home" class="screen">
+    <header class="top">
+      <div class="brand" id="brand"></div>
+      <div class="top-right">
+        <button class="kid" id="kidBtn"></button>
+        <button class="round" id="infoBtn" aria-label="Información">?</button>
+        <button class="round hold" id="adultBtn" aria-label="Panel del adulto: mantén presionado">⚙</button>
+      </div>
+    </header>
+    <div class="center">
+      <p class="big" id="homeTitle"></p>
+      <div id="streakBox"></div>
+      <div id="homeCta"></div>
+    </div>
+  </section>
+
+  <!-- JUEGO: aquí va la mecánica de cada app -->
+  <section id="game" class="screen" hidden>
+    <div class="energy" id="energy"></div>
+    <div class="stage" id="stage"></div>
+    <div class="bubble" id="bubble"></div>
+  </section>
+
+  <!-- FIN: celebración + elegir seguir o terminar (sin cuota fija) -->
+  <section id="end" class="screen" hidden></section>
+</div>
+<div id="sheet" class="sheet" hidden></div>
+
+<script src="respaldo.js"></script>
+<script src="voz.js"></script>
+<script>
+(() => {
+'use strict';
+/* ③ CAMBIA: identidad de la app. APP debe ser única: todas las apps comparten el dominio
+   jlcaleroh-apps.github.io y por eso TODAS las claves de almacenamiento empiezan con APP + ':'. */
+const APP = 'plantilla', NOMBRE = 'Plantilla', CONTACTO = 'jlcaleroh@gmail.com';
+const KEY = APP + ':v1';
+const ROUNDS = 5;                     // aciertos para cerrar una misión
+const $ = s => document.querySelector(s);
+const DAY = 864e5;
+
+/* ---------- textos en dos idiomas (nunca mezclados) ---------- */
+const TX = {
+  es: { brand: NOMBRE, who: '¿Quién juega?', newKid: 'Nuevo jugador', title: '¡Hola, {n}!', play: '¡A jugar!',
+    limit: 'Misiones de hoy completas. ¡Vuelve mañana!', ask: '¡Toca la estrella que brilla!', praise: '¡Muy bien, la encontraste!',
+    oops: '¡Ups! Intenta otra vez.', done: '¡Misión cumplida!', more: '¡Otra misión!', stop: 'Terminar por ahora',
+    days: n => n === 1 ? 'día seguido' : 'días seguidos', streakSay: n => `¡Llevas ${n} días seguidos!`,
+    adult: 'Panel del adulto', holdHint: 'Mantén presionado 2 segundos', close: 'Cerrar', save: 'Guardar', cancel: 'Cancelar',
+    players: 'Jugadores', add: 'Agregar jugador', rename: 'Cambiar nombre', del: 'Borrar', use: 'Jugar con este', playing: '(jugando)',
+    name: 'Nombre del niño o niña', limitL: 'Límite de misiones por día', noLimit: 'Sin límite', perDay: n => `${n} por día`,
+    lang: 'Idioma', stats: (s, t) => `Misiones completas: ${s} · Hoy: ${t}`, delAsk: n => `¿Borrar a ${n} y todo su progreso?`,
+    contact: 'Contacto' },
+  en: { brand: NOMBRE, who: 'Who is playing?', newKid: 'New player', title: 'Hi, {n}!', play: "Let's play!",
+    limit: "Today's missions are done. Come back tomorrow!", ask: 'Tap the shining star!', praise: 'Great, you found it!',
+    oops: 'Oops! Try again.', done: 'Mission complete!', more: 'Another mission!', stop: 'Stop for now',
+    days: n => n === 1 ? 'day in a row' : 'days in a row', streakSay: n => `${n} days in a row!`,
+    adult: 'Adult panel', holdHint: 'Press and hold for 2 seconds', close: 'Close', save: 'Save', cancel: 'Cancel',
+    players: 'Players', add: 'Add player', rename: 'Rename', del: 'Delete', use: 'Play with this one', playing: '(playing)',
+    name: "Child's name", limitL: 'Missions per day', noLimit: 'No limit', perDay: n => `${n} per day`,
+    lang: 'Language', stats: (s, t) => `Missions completed: ${s} · Today: ${t}`, delAsk: n => `Delete ${n} and all progress?`,
+    contact: 'Contact' },
+};
+/* ④ CAMBIA: contenido de la ventana de información (estructura estándar, ver ESTANDAR.md). */
+const INFO = {
+  es: { what: 'Qué es', whatT: 'Plantilla base de las apps de jlcaleroh-apps para niños con TDAH.',
+    how: 'Cómo se juega', howL: ['Toca la estrella que brilla.', 'Con 5 aciertos la misión termina y se celebra.'],
+    tdah: 'Principios para TDAH', tdahL: ['Respuesta en menos de 1 segundo y elogio específico por voz.', 'Sin castigo por error: se intenta otra vez.', 'Una meta por pantalla y audio en todo.', 'Final claro sin cuota diaria: el niño decide si sigue (hiperfoco).', 'Premios por sesión, no por acierto. Sin tiendas ni anuncios.', 'Adulto incluido: jugar al lado casi duplica el efecto.'],
+    forAdult: 'Para el adulto', forAdultL: ['Panel del adulto: mantén presionado ⚙ 2 segundos.', 'Ahí están los jugadores, el límite opcional, la prueba de voz y el respaldo.'],
+    install: 'Sin Internet', installT: 'En Safari: Compartir → Agregar a pantalla de inicio.' },
+  en: { what: 'What it is', whatT: 'Base template for the jlcaleroh-apps apps for children with ADHD.',
+    how: 'How to play', howL: ['Tap the shining star.', 'After 5 correct taps the mission ends with a celebration.'],
+    tdah: 'ADHD principles', tdahL: ['Response in under 1 second with specific spoken praise.', 'No penalty for mistakes: just try again.', 'One goal per screen and audio for everything.', 'Clear ending with no daily quota: the child decides to continue (hyperfocus).', 'Rewards per session, not per answer. No stores or ads.', 'Adult included: playing alongside nearly doubles the effect.'],
+    forAdult: 'For the adult', forAdultL: ['Adult panel: press and hold ⚙ for 2 seconds.', 'It has players, the optional limit, the voice check and the backup.'],
+    install: 'Offline', installT: 'In Safari: Share → Add to Home Screen.' },
+};
+
+/* ---------- almacenamiento: perfiles + ajustes en una sola clave ---------- */
+const freshKid = name => ({ id: 'k' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name, avatar: '⭐',
+  sessions: 0, daily: { date: null, n: 0 }, streak: { n: 0, last: null, best: 0 } });
+let S = { lang: 'es', limit: 0, cur: null, kids: [] };
+try { const d = JSON.parse(localStorage.getItem(KEY)); if (d) S = Object.assign(S, d); } catch (e) {}
+if (!S.kids.length) S.kids.push(freshKid('Explorador'));
+if (!S.kids.find(k => k.id === S.cur)) S.cur = S.kids[0].id;
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+const kid = () => S.kids.find(k => k.id === S.cur);
+const T = () => TX[S.lang === 'en' ? 'en' : 'es'];
+const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dstr = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const today = () => dstr(new Date());
+const daysBetween = (a, b) => Math.round((new Date(b + 'T12:00') - new Date(a + 'T12:00')) / DAY);
+const todayCount = () => kid().daily.date === today() ? kid().daily.n : 0;
+const limitReached = () => S.limit > 0 && todayCount() >= S.limit;
+const streakNow = () => { const s = kid().streak; return s.last && daysBetween(s.last, today()) <= 1 ? s.n : 0; };
+save();
+
+/* ---------- voz y sonidos (feedback en menos de 1 s) ---------- */
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  try {
+    speechSynthesis.cancel();
+    const L = S.lang === 'en' ? 'en' : 'es', u = new SpeechSynthesisUtterance(text);
+    const v = window.Voz && Voz.elegida(L);
+    u.lang = v ? v.lang : (L === 'en' ? 'en-US' : 'es-MX'); if (v) u.voice = v;
+    u.rate = .95 * (window.Voz ? Voz.velocidad(L) : 1); u.pitch = 1.1;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+let ac = null;
+function tone(f, d, at = 0, type = 'sine', vol = .18) {
+  try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === 'suspended') ac.resume();
+    const t = ac.currentTime + at, o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+    o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d + .05); } catch (e) {}
+}
+const sfx = { good: () => [784, 988, 1319].forEach((f, i) => tone(f, .2, i * .08)), soft: () => tone(520, .12, 0, 'triangle', .1),
+  fanfare: () => [523, 659, 784, 1046].forEach((f, i) => tone(f, .25, i * .12, 'triangle', .16)) };
+/* pantalla siempre encendida mientras se juega */
+let lock = null;
+async function wake() { try { if ('wakeLock' in navigator) lock = await navigator.wakeLock.request('screen'); } catch (e) {} }
+function sleep() { try { lock && lock.release(); } catch (e) {} lock = null; }
+
+/* ---------- pantallas ---------- */
+function show(id) { ['who', 'home', 'game', 'end'].forEach(s => { $('#' + s).hidden = s !== id; }); }
+function renderWho() {
+  $('#who').innerHTML = `<div class="center"><p class="big">${T().who}</p><div class="who-grid">${S.kids.map(k =>
+    `<button class="who" data-id="${k.id}"><span class="av">${k.avatar}</span>${esc(k.name)}</button>`).join('')}</div></div>`;
+  $('#who').querySelectorAll('.who').forEach(b => b.onclick = () => { S.cur = b.dataset.id; save(); renderHome(); show('home'); speak(T().title.replace('{n}', kid().name)); });
+  show('who');
+}
+function streakHTML() {
+  const n = streakNow(); if (!n) return '';
+  return `<div class="streak"><b>${n}</b><span>${T().days(n)}</span><span class="dots">${Array.from({ length: 7 }, (_, i) => `<i class="${i < Math.min(n, 7) ? 'on' : ''}"></i>`).join('')}</span></div>`;
+}
+function renderHome() {
+  document.documentElement.lang = S.lang;
+  $('#brand').textContent = T().brand;
+  $('#kidBtn').textContent = kid().avatar + ' ' + kid().name; $('#kidBtn').hidden = S.kids.length < 2;
+  $('#homeTitle').textContent = T().title.replace('{n}', kid().name);
+  $('#streakBox').innerHTML = streakHTML();
+  $('#homeCta').innerHTML = limitReached() ? `<p class="sub">${T().limit}</p>` : `<button class="play" id="playBtn">${T().play}</button>`;
+  const p = $('#playBtn'); if (p) p.onclick = start;
+}
+$('#kidBtn').onclick = renderWho;
+
+/* ---------- ⑤ CAMBIA: la mecánica del juego. Ejemplo: tocar la estrella que brilla ---------- */
+let G = null;
+function start() {
+  wake(); G = { hits: 0, alive: true }; show('game'); renderEnergy(); round();
+}
+function renderEnergy() { $('#energy').innerHTML = Array.from({ length: ROUNDS }, (_, i) => `<i class="${i < G.hits ? 'on' : ''}"></i>`).join(''); }
+function round() {
+  const items = ['⭐', '⭐', '⭐'], hit = Math.floor(Math.random() * 3);
+  $('#stage').innerHTML = items.map((e, i) => `<button class="target${i === hit ? ' glow' : ''}" data-i="${i}">${e}</button>`).join('');
+  $('#bubble').textContent = T().ask; speak(T().ask);
+  $('#stage').querySelectorAll('.target').forEach(b => b.addEventListener('pointerdown', e => {
+    e.preventDefault(); if (!G.alive) return;
+    if (+b.dataset.i === hit) {
+      sfx.good(); speak(T().praise); G.hits++; renderEnergy();          // feedback inmediato y específico
+      if (G.hits >= ROUNDS) finish(); else setTimeout(round, 900);
+    } else {
+      sfx.soft(); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); speak(T().oops);   // sin castigo
+    }
+  }));
+}
+function finish() {
+  G.alive = false; const k = kid();
+  k.sessions++;
+  if (k.daily.date !== today()) k.daily = { date: today(), n: 0 }; k.daily.n++;
+  const gap = k.streak.last ? daysBetween(k.streak.last, today()) : null;          // racha: sin regaño si se corta
+  if (gap !== 0) { k.streak.n = gap === 1 ? k.streak.n + 1 : 1; k.streak.last = today(); k.streak.best = Math.max(k.streak.best, k.streak.n); }
+  save(); sfx.fanfare();
+  const n = streakNow();
+  $('#end').innerHTML = `<div class="center"><p class="big">${T().done}</p>${n >= 2 ? streakHTML() : ''}
+    ${limitReached() ? `<p class="sub">${T().limit}</p><button class="play" id="endHome">OK</button>`
+      : `<button class="play" id="endMore">${T().more}</button><button class="link" id="endHome">${T().stop}</button>`}</div>`;
+  show('end'); speak(T().done + (n >= 2 ? ' ' + T().streakSay(n) : ''));
+  const m = $('#endMore'); if (m) m.onclick = start;
+  $('#endHome').onclick = () => { sleep(); renderHome(); show('home'); };
+}
+
+/* ---------- hojas: info, panel del adulto, formularios ---------- */
+function sheet(html) { const s = $('#sheet'); s.innerHTML = `<div class="card" role="dialog" aria-modal="true">${html}</div>`; s.hidden = false; return s; }
+function closeSheet() { $('#sheet').hidden = true; $('#sheet').innerHTML = ''; }
+$('#infoBtn').onclick = () => {
+  const I = INFO[S.lang === 'en' ? 'en' : 'es'], li = a => `<ul>${a.map(x => `<li>${x}</li>`).join('')}</ul>`;
+  sheet(`<h2>${NOMBRE}</h2><h3>${I.what}</h3><p>${I.whatT}</p><h3>${I.how}</h3>${li(I.howL)}<h3>${I.tdah}</h3>${li(I.tdahL)}
+    <h3>${I.forAdult}</h3>${li(I.forAdultL)}<h3>${I.install}</h3><p>${I.installT}</p>
+    <p><b>${T().contact}:</b> <a href="mailto:${CONTACTO}">${CONTACTO}</a></p>
+    <div class="row"><button class="btn" id="shClose">${T().close}</button></div>`);
+  $('#shClose').onclick = closeSheet;
+};
+/* gesto estándar: mantener presionado 2 s (los niños no lo abren por accidente) */
+(function hold() {
+  const b = $('#adultBtn'); let tm = 0;
+  const go = e => { e.preventDefault(); b.classList.add('holding'); tm = setTimeout(() => { b.classList.remove('holding'); openAdult(); }, 2000); };
+  const stop = () => { clearTimeout(tm); b.classList.remove('holding'); };
+  b.addEventListener('pointerdown', go); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, stop));
+  b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAdult(); } });
+  b.addEventListener('contextmenu', e => e.preventDefault());
+})();
+function openAdult() {
+  const t = T();
+  sheet(`<h2>${t.adult}</h2><p>${esc(kid().name)} · ${t.stats(kid().sessions, todayCount())}</p>
+    <div><b>${t.lang}</b><div class="row">${['es', 'en'].map(l => `<button class="btn${S.lang === l ? '' : ' light'}" data-lang="${l}">${l === 'es' ? 'Español' : 'English'}</button>`).join('')}</div></div>
+    <div><b>${t.players}</b>${S.kids.map(k => `<div class="row" style="padding:6px 0;border-bottom:1px solid #e3dccb"><span style="flex:1">${k.avatar} ${esc(k.name)} ${k.id === S.cur ? t.playing : ''}</span>
+      ${k.id !== S.cur ? `<button class="btn light" data-use="${k.id}">${t.use}</button>` : ''}
+      <button class="btn light" data-ren="${k.id}">${t.rename}</button>${S.kids.length > 1 ? `<button class="btn danger" data-del="${k.id}">${t.del}</button>` : ''}</div>`).join('')}
+      <div class="row" style="margin-top:8px"><button class="btn" id="aAdd">${t.add}</button></div></div>
+    <div><b>${t.limitL}</b><br><select id="aLimit">${[0, 1, 2, 3, 5].map(n => `<option value="${n}"${S.limit === n ? ' selected' : ''}>${n ? t.perDay(n) : t.noLimit}</option>`).join('')}</select></div>
+    <div id="aVoz"></div><div id="aRespaldo"></div>
+    <p class="note">${NOMBRE} · ${t.contact}: <a href="mailto:${CONTACTO}">${CONTACTO}</a></p>
+    <div class="row"><button class="btn" id="aClose">${t.close}</button></div>`);
+  if (window.Voz) Voz.montar($('#aVoz'));
+  if (window.Respaldo) Respaldo.montar($('#aRespaldo'));
+  $('#aClose').onclick = () => { closeSheet(); renderHome(); };
+  $('#aLimit').onchange = e => { S.limit = +e.target.value; save(); };
+  $('#sheet').querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { S.lang = b.dataset.lang; save(); renderHome(); openAdult(); });
+  $('#sheet').querySelectorAll('[data-use]').forEach(b => b.onclick = () => { S.cur = b.dataset.use; save(); renderHome(); openAdult(); });
+  $('#sheet').querySelectorAll('[data-ren]').forEach(b => b.onclick = () => kidForm(b.dataset.ren));
+  $('#sheet').querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+    const k = S.kids.find(x => x.id === b.dataset.del);
+    sheet(`<p>${t.delAsk(esc(k.name))}</p><div class="row"><button class="btn danger" id="dYes">${t.del}</button><button class="btn light" id="dNo">${t.cancel}</button></div>`);
+    $('#dNo').onclick = openAdult;
+    $('#dYes').onclick = () => { S.kids = S.kids.filter(x => x.id !== k.id); if (S.cur === k.id) S.cur = S.kids[0].id; save(); renderHome(); openAdult(); };
+  });
+  $('#aAdd').onclick = () => kidForm(null);
+}
+function kidForm(id) {
+  const t = T(), k = id ? S.kids.find(x => x.id === id) : null;
+  sheet(`<form id="kf"><h2>${k ? t.rename : t.add}</h2><p class="note">${t.name}</p>
+    <input type="text" id="kName" maxlength="20" required value="${k ? esc(k.name) : ''}" style="width:100%;margin:8px 0">
+    <div class="row"><button class="btn" type="submit">${t.save}</button><button class="btn light" type="button" id="kCancel">${t.cancel}</button></div></form>`);
+  $('#kCancel').onclick = openAdult;
+  $('#kf').onsubmit = e => { e.preventDefault(); const n = $('#kName').value.trim(); if (!n) return;
+    if (k) k.name = n; else S.kids.push(freshKid(n)); save(); renderHome(); openAdult(); };
+}
+
+/* ---------- componentes comunes ---------- */
+if (window.Respaldo) Respaldo.iniciar({ app: APP, nombre: NOMBRE, clave: k => k.startsWith(APP + ':'),
+  idioma: () => S.lang, antes: save, claseBoton: 'btn', contarNinos: () => S.kids.length });
+if (window.Voz) Voz.iniciar({ app: APP, idioma: () => S.lang, claseBoton: 'btn',
+  ejemplos: L => (L === 'en' ? ['star', 'great', 'try again'] : ['estrella', 'muy bien', 'otra vez']).map(x => ({ t: x, d: x })),
+  frase: L => TX[L].praise, decir: t => speak(t) });
+
+/* ---------- inicio ---------- */
+renderHome();
+if (S.kids.length > 1) renderWho(); else show('home');
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+})();
+</script>
+</body>
+</html>
