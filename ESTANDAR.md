@@ -52,17 +52,18 @@ Copiar **sin cambios**. Si se mejora uno, se copia igual a todos los repos.
 | Archivo | Qué hace | Dónde se monta |
 |---|---|---|
 | `respaldo.js` | Guardar y restaurar el progreso de todos los niños en un archivo; fecha del último respaldo y aviso a las 2 semanas; pide al navegador no borrar los datos. Lee respaldos viejos con `convertir` o `renombrar`. | Panel del adulto |
-| `voz.js` | Elegir la voz por idioma, velocidad y ejemplos para comprobar la pronunciación. | Panel del adulto |
+| `voz.js` | Elegir la voz por idioma, velocidad, ejemplos para comprobar la pronunciación y (opcional) grabar la voz del adulto para letras, sílabas o palabras sueltas. Las grabaciones viajan en el respaldo. | Panel del adulto |
 | `adulto.js` | Gesto común para abrir lo que es solo para adultos: mantener presionado 2 s, con llenado y aviso. | Botón del panel del adulto (y ajustes) |
+| `pantalla.js` | Pantalla encendida mientras hay toques; se suelta tras 3 min sin actividad. Las apps con reloj la fijan mientras corre. | Al iniciar la app |
 
-El habla de la app usa siempre la voz elegida: `Voz.elegida(lang)` y `Voz.velocidad(lang)`.
+El habla de la app usa siempre la voz elegida: `Voz.elegida(lang)` y `Voz.velocidad(lang)`. Para una unidad suelta (letra, sílaba, palabra) usa `Voz.decirUnidad(texto)`, que prefiere la grabación del adulto.
 
 ## 6. Sin Internet e instalación
 - [ ] `sw.js`: página con red primero (espera máxima 4 s) y copia guardada si no hay Internet; íconos, fuentes y componentes desde la copia.
 - [ ] `CACHE` con el id de la app y versión (`numeros-v3`). **Subir la versión** cuando cambien archivos que no sean la página.
 - [ ] Todo archivo nuevo se agrega a la lista `CORE` de `sw.js`.
 - [ ] `manifest.webmanifest` con nombre, nombre corto, colores e íconos (192, 512, 512 maskable) + `apple-touch-icon`.
-- [ ] Pantalla siempre encendida mientras se juega (Wake Lock).
+- [ ] Pantalla encendida mientras se juega con `pantalla.js`.
 
 ## 7. Idioma
 - [ ] Español por defecto. Inglés opcional, con textos en un diccionario por idioma; **nunca mezclar idiomas** en la voz ni en la pantalla.
