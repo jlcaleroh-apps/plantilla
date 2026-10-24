@@ -31,6 +31,7 @@ Basados en el documento de investigación "Juegos en iPad para que niños con TD
   4. Para el adulto
   5. Sin Internet (instalar)
   6. Contacto: jlcaleroh@gmail.com
+  - Las secciones propias de cada app (por ejemplo "Estrellas" u "Orden de las letras") van justo después de "Cómo se juega". El resto del orden no cambia.
 - [ ] **Panel del adulto** con el **gesto estándar: mantener presionado 2 segundos** (el botón se llena de color; si se suelta antes, aviso corto). Se hace con el componente `adulto.js`. PIN solo como opción extra, pedido después del gesto.
 - [ ] El panel incluye: progreso, jugadores (agregar, cambiar nombre, borrar con confirmación), idioma, límite diario opcional, **Prueba de voz**, **Respaldo** y contacto.
 
