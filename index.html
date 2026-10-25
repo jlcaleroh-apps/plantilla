@@ -110,6 +110,7 @@ button:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
 <script src="voz.js"></script>
 <script src="adulto.js"></script>
 <script src="pantalla.js"></script>
+<script src="apps.js"></script>
 <script>
 (() => {
 'use strict';
@@ -131,7 +132,7 @@ const TX = {
     players: 'Jugadores', add: 'Agregar jugador', rename: 'Cambiar nombre', del: 'Borrar', use: 'Jugar con este', playing: '(jugando)',
     name: 'Nombre del niño o niña', limitL: 'Límite de misiones por día', noLimit: 'Sin límite', perDay: n => `${n} por día`,
     lang: 'Idioma', stats: (s, t) => `Misiones completas: ${s} · Hoy: ${t}`, delAsk: n => `¿Borrar a ${n} y todo su progreso?`,
-    contact: 'Contacto' },
+    otherApps: 'Otras apps', contact: 'Contacto' },
   en: { brand: NOMBRE, who: 'Who is playing?', newKid: 'New player', title: 'Hi, {n}!', play: "Let's play!",
     limit: "Today's missions are done. Come back tomorrow!", ask: 'Tap the shining star!', praise: 'Great, you found it!',
     oops: 'Oops! Try again.', done: 'Mission complete!', more: 'Another mission!', stop: 'Stop for now',
@@ -140,7 +141,7 @@ const TX = {
     players: 'Players', add: 'Add player', rename: 'Rename', del: 'Delete', use: 'Play with this one', playing: '(playing)',
     name: "Child's name", limitL: 'Missions per day', noLimit: 'No limit', perDay: n => `${n} per day`,
     lang: 'Language', stats: (s, t) => `Missions completed: ${s} · Today: ${t}`, delAsk: n => `Delete ${n} and all progress?`,
-    contact: 'Contact' },
+    otherApps: 'Other apps', contact: 'Contact' },
 };
 /* ④ CAMBIA: contenido de la ventana de información (estructura estándar, ver ESTANDAR.md). */
 const INFO = {
@@ -268,8 +269,10 @@ $('#infoBtn').onclick = () => {
   const I = INFO[S.lang === 'en' ? 'en' : 'es'], li = a => `<ul>${a.map(x => `<li>${x}</li>`).join('')}</ul>`;
   sheet(`<h2>${NOMBRE}</h2><h3>${I.what}</h3><p>${I.whatT}</p><h3>${I.how}</h3>${li(I.howL)}<h3>${I.tdah}</h3>${li(I.tdahL)}
     <h3>${I.forAdult}</h3>${li(I.forAdultL)}<h3>${I.install}</h3><p>${I.installT}</p>
+    <h3>${T().otherApps}</h3><div id="otrasApps"></div>
     <h3>${T().contact}</h3><p><a href="mailto:${CONTACTO}">${CONTACTO}</a></p>
     <div class="row"><button class="btn" id="shClose">${T().close}</button></div>`);
+  if (window.Apps) Apps.montar($('#otrasApps'), { actual: APP, idioma: S.lang });   // componente común apps.js
   $('#shClose').onclick = closeSheet;
 };
 /* gesto estándar (componente común adulto.js): mantener presionado 2 s */

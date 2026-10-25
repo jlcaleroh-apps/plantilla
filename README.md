@@ -8,7 +8,7 @@ Punto de partida para cada app nueva para niños con TDAH. Ya trae todo lo comú
 - Ventana **?** de información con la estructura estándar y el contacto
 - Panel del adulto con el gesto estándar (mantener presionado ⚙ 2 segundos)
 - Español e inglés
-- Componentes comunes: **`respaldo.js`** (respaldo del progreso), **`voz.js`** (prueba y grabación de voz), **`adulto.js`** (gesto de 2 s para el panel del adulto) y **`pantalla.js`** (pantalla encendida)
+- Componentes comunes: **`respaldo.js`** (respaldo del progreso), **`voz.js`** (prueba y grabación de voz), **`adulto.js`** (gesto de 2 s para el panel del adulto), **`pantalla.js`** (pantalla encendida) y **`apps.js`** (enlaces a las otras apps en la ventana de información)
 - Funciona sin Internet e instalable en el iPad (`sw.js`, `manifest.webmanifest`, íconos)
 
 ## Crear una app nueva

@@ -30,7 +30,8 @@ Basados en el documento de investigación "Juegos en iPad para que niños con TD
   3. Principios para TDAH
   4. Para el adulto
   5. Sin Internet (instalar)
-  6. Contacto: jlcaleroh@gmail.com
+  6. Otras apps (componente `apps.js`): enlaces a las demás apps de la colección, para que los padres que llegan a una conozcan las otras
+  7. Contacto: jlcaleroh@gmail.com
   - Las secciones propias de cada app (por ejemplo "Estrellas" u "Orden de las letras") van justo después de "Cómo se juega". El resto del orden no cambia.
 - [ ] **Panel del adulto** con el **gesto estándar: mantener presionado 2 segundos** (el botón se llena de color; si se suelta antes, aviso corto). Se hace con el componente `adulto.js`. PIN solo como opción extra, pedido después del gesto.
 - [ ] El panel incluye: progreso, jugadores (agregar, cambiar nombre, borrar con confirmación), idioma, límite diario opcional, **Prueba de voz**, **Respaldo** y contacto.
@@ -54,6 +55,7 @@ Copiar **sin cambios**. Si se mejora uno, se copia igual a todos los repos.
 | `respaldo.js` | Guardar y restaurar el progreso de todos los niños en un archivo; fecha del último respaldo y aviso a las 2 semanas; pide al navegador no borrar los datos. Lee respaldos viejos con `convertir` o `renombrar`. | Panel del adulto |
 | `voz.js` | Elegir la voz por idioma, velocidad, ejemplos para comprobar la pronunciación y (opcional) grabar la voz del adulto para letras, sílabas o palabras sueltas. Las grabaciones viajan en el respaldo. | Panel del adulto |
 | `adulto.js` | Gesto común para abrir lo que es solo para adultos: mantener presionado 2 s, con llenado y aviso. | Botón del panel del adulto (y ajustes) |
+| `apps.js` | Lista de las otras apps de la colección con ícono, nombre, una línea y botón "Abrir" (se abre en otra pestaña). Al crear una app nueva se agrega a su `LISTA` y se copia el archivo a todos los repos. | Ventana de información, antes de Contacto |
 | `pantalla.js` | Pantalla encendida mientras hay toques; se suelta tras 3 min sin actividad. Las apps con reloj la fijan mientras corre. | Al iniciar la app |
 
 El habla de la app usa siempre la voz elegida: `Voz.elegida(lang)` y `Voz.velocidad(lang)`. Para una unidad suelta (letra, sílaba, palabra) usa `Voz.decirUnidad(texto)`, que prefiere la grabación del adulto.
@@ -77,6 +79,7 @@ El habla de la app usa siempre la voz elegida: `Voz.elegida(lang)` y `Voz.veloci
 ## 9. Publicar
 1. Crear el repo en `jlcaleroh-apps` con **"Use this template"** desde `plantilla`.
 2. Cambiar los puntos marcados ① a ⑤ en `index.html`, el `CACHE` de `sw.js`, `manifest.webmanifest` e íconos.
-3. Activar GitHub Pages: **Settings → Pages → Branch: main / root**.
-4. Abrir `https://jlcaleroh-apps.github.io/<repo>/` en Safari e instalar con **Compartir → Agregar a pantalla de inicio**.
-5. Revisar esta lista completa.
+3. Agregar la app nueva a la `LISTA` de `apps.js` y copiar ese `apps.js` a **todos** los repos (subiendo su `CACHE`).
+4. Activar GitHub Pages: **Settings → Pages → Branch: main / root**.
+5. Abrir `https://jlcaleroh-apps.github.io/<repo>/` en Safari e instalar con **Compartir → Agregar a pantalla de inicio**.
+6. Revisar esta lista completa.
